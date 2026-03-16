@@ -16,12 +16,14 @@ function saveSettings() {
     // Step 1 fields
     const keyword = document.getElementById('keywordInput').value;
     const productName = document.getElementById('productNameInput').value;
+    const rawEbayText = document.getElementById('rawEbayTextInput').value;
 
     localStorage.setItem('geminiApiKey', apiKey);
     localStorage.setItem('systemPrompt', systemPrompt);
     localStorage.setItem('htmlTemplateInput', htmlTemplate);
     localStorage.setItem('keywordInput', keyword);
     localStorage.setItem('productNameInput', productName);
+    localStorage.setItem('rawEbayTextInput', rawEbayText);
 
     alert('설정이 저장되었습니다.');
     closeSettingsModal();
@@ -39,6 +41,8 @@ function loadSettings() {
     if (htmlTemplate) document.getElementById('htmlTemplateInput').value = htmlTemplate;
     if (keyword) document.getElementById('keywordInput').value = keyword;
     if (productName) document.getElementById('productNameInput').value = productName;
+    const rawEbayText = localStorage.getItem('rawEbayTextInput');
+    if (rawEbayText) document.getElementById('rawEbayTextInput').value = rawEbayText;
 
     // 메모 불러오기
     const memo1 = localStorage.getItem('memo1');
@@ -79,12 +83,9 @@ function handleDataTableImage(input) {
 }
 
 function resetAll() {
-    // Step 1
+    // Step 1 (키워드, 키워드 타이틀 상위 15개, 데이터 테이블 유지)
     document.getElementById('productNameInput').value = '';
     document.getElementById('resultText').value = '';
-    document.getElementById('dataTableFileName').value = '';
-    document.getElementById('dataTableInput').value = '';
-    dataTableImageData = null;
     // Step 2
     document.getElementById('jsonInput').value = '';
     // Step 3
@@ -128,6 +129,17 @@ async function generateListingWithAi() {
 
     const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
+    // 이베이 검색결과 텍스트에서 경쟁사 타이틀 추출
+    const rawEbayText = document.getElementById('rawEbayTextInput').value;
+    const titleSet = new Set();
+    rawEbayText.split('\n').forEach(line => {
+        if (line.includes('Opens in a new window or tab')) {
+            const title = line.replace('Opens in a new window or tab', '').trim();
+            if (title.length > 10) titleSet.add(title);
+        }
+    });
+    const parsedTitles = [...titleSet].join('\n');
+
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -140,6 +152,7 @@ async function generateListingWithAi() {
                         { text: `키워드: ${keyword}` },
                         { text: `제품명: ${productName}` },
                         { text: `추출된 데이터:\n${ocrText}` },
+                        { text: `[경쟁사 상위 노출 타이틀 데이터 (SEO 분석용)]\n${parsedTitles}` },
                         { inline_data: { mime_type: dataTableImageData.mimeType, data: dataTableImageData.base64 } }
                     ]
                 }],

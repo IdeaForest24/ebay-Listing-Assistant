@@ -117,7 +117,7 @@ button:disabled { /* 비활성화 버튼 스타일 */
     display: flex;
     gap: 20px;
     align-items: stretch; /* 높이 맞춤 */
-    min-height: 350px; /* Step 1 전체의 최소 높이 확보 */
+    min-height: 500px; /* Step 1 전체의 최소 높이 확보 */
 }
 .step1-left {
     flex: 1.5; /* 가로 길이를 대폭 줄임 */
@@ -162,21 +162,28 @@ button:disabled { /* 비활성화 버튼 스타일 */
 
 .progress-bar { width: 100%; background-color: #e0e0e0; border-radius: 4px; overflow: hidden; height: 10px; display: none; }
 .progress-fill { height: 100%; background-color: #4caf50; width: 0%; transition: width 0.3s; }
-.input-group { 
-    display: flex; 
+.input-group {
+    display: flex;
     flex-direction: column;
-    gap: 40px; /* 간격을 조금 더 넓힘 */
+    gap: 20px;
 }
-.input-group > div { 
+.input-group > div {
     display: flex;
     flex-direction: column;
 }
+.input-group > div:first-child {
+    min-height: 178px; /* 오른쪽 "키워드 타이틀 상위 15개" 섹션 높이에 맞춤 */
+}
 .input-group label { margin-bottom: 5px; }
 
+#rawEbayTextInput {
+    height: 160px;
+    resize: none;
+}
+
 #resultText {
-    height: 100%; /* 부모 높이에 맞춤 */
     flex-grow: 1; /* 남은 공간 모두 차지 */
-    min-height: 250px; /* Step 2와 비슷한 세로 길이 확보 */
+    min-height: 180px;
     resize: none; /* 크기 조절 비활성화 */
 }
 
