@@ -20,6 +20,7 @@
         <h2>Step 1. 텍스트 추출</h2>
     </div>
     <div style="text-align: right; margin-bottom: 10px;">
+        <button id="extractTitlesBtn" onclick="extractTitles()">🔍 타이틀 추출</button>
         <button id="uploadBtn" onclick="document.getElementById('fileInput').click()">📁 이미지 업로드</button>
         <input type="file" id="fileInput" accept="image/*" multiple style="display: none;" onchange="processImages(this)">
     </div>
@@ -56,6 +57,15 @@
         </div>
     </div>
 
+</div>
+
+<!-- Debug: 전송 텍스트 확인 -->
+<div id="debugSection" class="step-section" style="display:none;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <h2 style="margin:0;">📋 전송 프롬프트 전체</h2>
+        <button onclick="document.getElementById('debugSection').style.display='none'">닫기</button>
+    </div>
+    <textarea id="debugOutput" style="width:100%; height:400px; font-family:monospace; font-size:12px; background:#1e1e1e; color:#d4d4d4; border:1px solid #444; padding:12px; box-sizing:border-box;" readonly></textarea>
 </div>
 
 <!-- Step 2: JSON 생성 -->
