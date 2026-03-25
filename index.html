@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eBay Listing Assistant v2.0</title>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -18,11 +18,6 @@
 <div id="step1" class="step-section">
     <div class="step1-title-row">
         <h2>Step 1. 텍스트 추출</h2>
-    </div>
-    <div style="text-align: right; margin-bottom: 10px;">
-        <button id="extractTitlesBtn" onclick="extractTitles()">🔍 타이틀 추출</button>
-        <button id="uploadBtn" onclick="document.getElementById('fileInput').click()">📁 이미지 업로드</button>
-        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;" onchange="processImages(this)">
     </div>
     <div class="step1-container">
         <div class="step1-left">
@@ -46,15 +41,26 @@
             </div>
         </div>
         <div class="step1-right">
-            <label for="rawEbayTextInput" style="display: block; margin-bottom: 5px;"><strong>🛒 키워드 타이틀 상위 15개</strong></label>
-            <textarea id="rawEbayTextInput" placeholder="이베이 검색 페이지에서 텍스트를 통째로 긁어서 붙여넣으세요."></textarea>
-            <label for="resultText" style="display: block; margin-bottom: 5px;"><strong>📄 추출된 텍스트</strong></label>
-            <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
-            <textarea id="resultText" placeholder="이미지에서 추출된 텍스트가 여기에 순차적으로 나타납니다..."></textarea>
-            <div style="margin-top: 10px; text-align: right;">
-                <button id="aiGenerateBtn">🚀 시작</button>
+            <div class="textarea-section">
+                <label for="rawEbayTextInput" style="display: block; margin-bottom: 5px;"><strong>🛒 키워드 타이틀 상위 15개</strong></label>
+                <div class="textarea-btn-row">
+                    <textarea id="rawEbayTextInput" placeholder="이베이 검색 페이지에서 텍스트를 통째로 긁어서 붙여넣으세요."></textarea>
+                    <button id="extractTitlesBtn" onclick="extractTitles()">타이틀<br>추출</button>
+                </div>
+            </div>
+            <div class="textarea-section grow">
+                <label for="resultText" style="display: block; margin-bottom: 5px;"><strong>📄 추출된 텍스트</strong></label>
+                <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="textarea-btn-row grow">
+                    <textarea id="resultText" placeholder="이미지에서 추출된 텍스트가 여기에 순차적으로 나타납니다..."></textarea>
+                    <button id="uploadBtn" onclick="document.getElementById('fileInput').click()">이미지<br>업로드</button>
+                    <input type="file" id="fileInput" accept="image/*" multiple style="display: none;" onchange="processImages(this)">
+                </div>
             </div>
         </div>
+    </div>
+    <div style="margin-top: 15px;">
+        <button id="aiGenerateBtn" style="width: 100%;">시작</button>
     </div>
 
 </div>
@@ -138,10 +144,10 @@
     </div>
 </div>
 
-<script src="utils.js"></script>
-<script src="ocr.js"></script>
-<script src="assembler.js"></script>
-<script src="ai.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/ocr.js"></script>
+<script src="js/assembler.js"></script>
+<script src="js/ai.js"></script>
 
 </body>
 </html>
